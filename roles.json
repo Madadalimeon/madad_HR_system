@@ -1,0 +1,26 @@
+[
+    {
+        "ID": "1",
+        "FullName": "HR",
+        "Update": "<a href='update_role.php?id=1'>Update<\/a>",
+        "Delete": "<a href='delete_role.php?id=1'>Delete<\/a>",
+        "View": "<a href='view_role.php?id=1'>View<\/a>",
+        "Add": "<a href='add_role.php'>Add<\/a>"
+    },
+    {
+        "ID": "2",
+        "FullName": "Employee",
+        "Update": "<a href='update_role.php?id=2'>Update<\/a>",
+        "Delete": "<a href='delete_role.php?id=2'>Delete<\/a>",
+        "View": "<a href='view_role.php?id=2'>View<\/a>",
+        "Add": "<a href='add_role.php'>Add<\/a>"
+    },
+    {
+        "ID": "3",
+        "FullName": "Manger",
+        "Update": "<a href='update_role.php?id=3'>Update<\/a>",
+        "Delete": "<a href='delete_role.php?id=3'>Delete<\/a>",
+        "View": "<a href='view_role.php?id=3'>View<\/a>",
+        "Add": "<a href='add_role.php'>Add<\/a>"
+    }
+]
