@@ -36,13 +36,13 @@ include './include/header.php';
                                         attendance.employees_id, 
                                         employees.first_name,
                                         employees.last_name,
-                                        attendance.sign_on,
+                                        attendance.sign_in,
                                         attendance.sign_out,
                                         attendance.date 
                                     FROM attendance 
                                     INNER JOIN employees 
                                         ON attendance.employees_id = employees.employees_id
-                                    ORDER BY attendance.date DESC, attendance.sign_on DESC";
+                                    ORDER BY attendance.date DESC, attendance.sign_in DESC";
 
                         $print_data = $conn->query($att_SQL);
 
@@ -53,7 +53,7 @@ include './include/header.php';
                                     <td><?php echo $row['id']; ?></td>
                                     <td><?php echo $row['employees_id']; ?></td>
                                     <td><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></td>
-                                    <td><?php echo $row['sign_on']; ?></td>
+                                    <td><?php echo $row['sign_in']; ?></td>
                                     <td><?php echo $row['sign_out'] ? $row['sign_out'] : '---'; ?></td>
                                     <td><?php echo $row['date']; ?></td>
                                 </tr>
