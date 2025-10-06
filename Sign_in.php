@@ -1,10 +1,10 @@
-<?php
+    <?php
 session_start();
 include './config/config.php';
 include './include/header.php';
 
 // ✅ Handle Sign In
-if (isset($_POST['sign_in'])) {
+if (isset($_POST['sign_on'])) {
     $emp = $_SESSION['employees_id'];
     $today = date('Y-m-d');
     $sign_in_time = date('H:i:s');
@@ -16,7 +16,7 @@ if (isset($_POST['sign_in'])) {
     if ($check_result->num_rows > 0) {
         echo "<div class='alert alert-info text-center'>You have already signed in today.</div>";
     } else {
-        $insert_sql = "INSERT INTO attendance (employees_id, sign_in, date) 
+        $insert_sql = "INSERT INTO attendance (employees_id, sign_on, date) 
                        VALUES ('$emp', '$sign_in_time', '$today')";
         if ($conn->query($insert_sql) === TRUE) {
             echo "<div class='alert alert-success text-center'>Sign In Successful</div>";

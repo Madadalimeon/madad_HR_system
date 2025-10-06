@@ -40,9 +40,8 @@ if (isset($_POST['submit'])) {
     $add_query = "INSERT INTO employees 
     (first_name,last_name,email,mobile_no,dob,date_of_joining,position,department,shift,role,country,state,city,address,profile_pic,Roles_id) 
     VALUES 
-    ('$first_name
-    
-    ','$last_name','$email','$mobile_no','$dob','$date_of_joining','$position','$department','$shift','$role','$country','$state','$city','$address','$file_name','$role_table')";
+    ('$first_name','$last_name','$email','$mobile_no','$dob','$date_of_joining','$position','$department','$shift','$role','$country','$state',
+    '$city','$address','$file_name','$role_table')";
 
     if ($conn->query($add_query)) {
         $employee_id = $conn->insert_id;
