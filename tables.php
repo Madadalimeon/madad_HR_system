@@ -1,15 +1,18 @@
 <?php
+session_start();
 include '/XAMPP/htdocs/HR_system/include/header.php';
 include './config/config.php';
 ?>
-
-
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Employee Data Table</h1>
+        <div class="mt-4">
+    <?php if (isset($_SESSION['role_permissions']['update']) && $_SESSION['role_permissions']['update'] == 1): ?>
         <a href="add-employee.php" class="btn btn-primary btn-sm">
             <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Employee
         </a>
+    <?php endif; ?>
+</div>
     </div>
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white py-3">

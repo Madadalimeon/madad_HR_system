@@ -36,8 +36,8 @@ include("./config/config.php");
                                     <td><?php echo $row['Roles_id']; ?></td>
                                     <td><?php echo $row['Roles_name']; ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-primary">
-                                            <a class="text-white" href="Roles_permission.php">Roles_permission</a>
+                                        <button type="button" class="btn btn-primary">                                            
+                                            <a class="text-white" href="Roles_permission.php?id=<?php echo $row['Roles_id']; ?>">Roles_permission</a>
                                         </button>
                                     </td>
                                 </tr>
