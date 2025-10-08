@@ -2,6 +2,7 @@
 session_start();
 include './haspermission.php';
 include './config/config.php';
+include './haspermission.php';
 
 if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -19,7 +20,6 @@ if (isset($_POST['login'])) {
         $_SESSION['username'] = $row['username'];
         $_SESSION['password'] = $row['password'];
         $_SESSION['Roles_id'] = $row['Roles_id'];
-
         header("Location: ./index.php");
         exit();
     } else {

@@ -12,7 +12,7 @@ $roleQuery = "SELECT Roles_id, Roles_name FROM roles WHERE Roles_id = $roleId";
 $roleResult = $conn->query($roleQuery);
 $role = $roleResult->fetch_assoc();
 
-$modules = ['Employees', 'Department', 'Attendance_table','Attendance' ];
+$modules = ['Employees', 'Department', 'Attendance_table','Attendance','Roles' ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($modules as  $module) {

@@ -1,15 +1,16 @@
 <?php
+session_start();
 include("./config/config.php");
-function hasPermission() {
+$R_id =$_SESSION['Roles_id'] ;
+function hasPermission($R_id) {
     global $conn;
     if (!isset($_SESSION['Roles_id'])) {
         echo "No role assigned.";
         return;
     }
-    $roleId = $_SESSION['Roles_id'];
-    $sql = "SELECT Roles_id, Module, `Update`, `Delete`, `View`, `Add` 
+    echo $sql = "SELECT Roles_id, Module, `Update`, `Delete`, `View`, `Add` 
             FROM roles_permission 
-            WHERE Roles_id = $roleId 
+            WHERE Roles_id = $R_id 
             LIMIT 1";
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
