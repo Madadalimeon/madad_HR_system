@@ -36,7 +36,7 @@ if (isset($_POST['update'])) {
             <div class="col-12 mb-3">
                 <label for="department">Department Name</label>
                 <input type="text" class="form-control" id="department" name="department" 
-                       value="<?= $department['department_name'] ?>" required>
+                       value="<?= $department['dempartment_name'] ?>" required>
             </div>
         </div>
         <button type="submit" name="update" class="btn btn-primary">Update Department</button>

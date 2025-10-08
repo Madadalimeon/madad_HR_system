@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,31 +45,37 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            
-            <li class="nav-item">
-                <a class="nav-link" href="tables.php">
-                    <i class="fa-solid fa-user"></i>
-                    <span> Employees </span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="table_department.php">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Department</span></a>
-            </li>
+        
 
-            <li class="nav-item">
-                <a class="nav-link" href="attendance_table.php">
-                    <i class="fa-solid fa-clipboard-user"></i>
-                    <span>Attendance</span></a>
-            </li>
+            <?php // if (isset($_SESSION['role_permissions']['view']) && $_SESSION['role_permissions']['view'] == 1): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="tables.php">
+                        <i class="fa-solid fa-user"></i>
+                        <span> Employees </span></a>
+                </li>
+            <?php // endif; ?>
+            <?php // if (isset($_SESSION['role_permissions']['view']) && $_SESSION['role_permissions']['view'] == 1): ?>
+                <li class="nav-item">
+                <li class="nav-item">
+                    <a class="nav-link" href="table_department.php">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Department</span></a>
+                </li>
+            <?php // endif; ?>
+            <?php // if (isset($_SESSION['role_permissions']['view']) && $_SESSION['role_permissions']['view'] == 1): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="attendance_table.php">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                        <span>Attendance Table</span></a>
+                </li>
+            <?php // endif; ?>
             <li class="nav-item">
                 <a class="nav-link" href="Sign_in.php">
                     <i class="fa-solid fa-user"></i>
-                    <span>Sign In</span></a>
+                    <span>Attendance</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="Roles.php">               
+                <a class="nav-link" href="Roles.php">
                     <i class="fa-solid fa-users-cog"></i>
                     <span>Roles</span></a>
             </li>

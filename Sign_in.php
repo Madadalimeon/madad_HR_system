@@ -1,15 +1,12 @@
-    <?php
+<?php
 session_start();
 include './config/config.php';
 include './include/header.php';
-
-// ✅ Handle Sign In
-if (isset($_POST['sign_on'])) {
+if (isset($_POST['sign_in'])) {
     $emp = $_SESSION['employees_id'];
     $today = date('Y-m-d');
     $sign_in_time = date('H:i:s');
 
-    // Check if already signed in today
     $check_sql = "SELECT * FROM attendance WHERE employees_id = '$emp' AND date = '$today'";
     $check_result = $conn->query($check_sql);
 
@@ -25,8 +22,6 @@ if (isset($_POST['sign_on'])) {
         }
     }
 }
-
-// ✅ Handle Sign Out
 if (isset($_POST['sign_out'])) {
     $emp = $_SESSION['employees_id'];
     $today = date('Y-m-d');
@@ -49,8 +44,6 @@ if (isset($_POST['sign_out'])) {
     }
 }
 ?>
-
-<!-- ✅ Page Title -->
 <style>
     .h {
         display: flex;

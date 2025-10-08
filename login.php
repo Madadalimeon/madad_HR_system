@@ -1,5 +1,6 @@
 <?php
 session_start();
+include './haspermission.php';
 include './config/config.php';
 
 if (isset($_POST['login'])) {
@@ -18,8 +19,6 @@ if (isset($_POST['login'])) {
         $_SESSION['username'] = $row['username'];
         $_SESSION['password'] = $row['password'];
         $_SESSION['Roles_id'] = $row['Roles_id'];
-        include './haspermission.php';
-        haspermission();
 
         header("Location: ./index.php");
         exit();
