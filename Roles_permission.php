@@ -3,11 +3,12 @@ session_start();
 include './config/config.php';
 include './include/header.php';
 
+
 if (!isset($_GET['id'])) {
     die("<div class='alert alert-danger'>Role ID not provided in URL!</div>");
 }
 
-$roleId = intval($_GET['id']);
+$roleId = $_GET['id'];
 $roleQuery = "SELECT Roles_id, Roles_name FROM roles WHERE Roles_id = $roleId";
 $roleResult = $conn->query($roleQuery);
 $role = $roleResult->fetch_assoc();

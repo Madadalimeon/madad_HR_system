@@ -7,8 +7,13 @@ include("./include/header.php");
 if (!isset($_SESSION['Roles_id'])) {
     die("Please log in first!");
 }
-$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
+
+include_once("./haspermission.php");
+$rolePermissions = getRolePermissions($_SESSION['Roles_id'] ?? 0);
 $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
+// $attendancePermissionss = $rolePermissions['permissions']['Attendance'] ?? [];
+// $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
+
 ?>
 
 <div class="container-fluid my-4">

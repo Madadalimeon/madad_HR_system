@@ -3,13 +3,16 @@ session_start();
 include './config/config.php';
 include './include/header.php';
 include_once("./haspermission.php");
+
+
+
+
+
 ?>
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Attendance Report</h1> 
     </div>
-
-    <!-- Data Table Card -->
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white py-3"> 
             <h6 class="m-0 font-weight-bold">Employee Attendance</h6>
@@ -30,17 +33,12 @@ include_once("./haspermission.php");
                     <tbody>
                         <?php
                         $att_SQL = "SELECT 
-                                        attendance.id,  
-                                        attendance.employees_id, 
-                                        employees.first_name,
-                                        employees.last_name,
-                                        attendance.sign_in,
-                                        attendance.sign_out,
-                                        attendance.date 
-                                    FROM attendance 
-                                    INNER JOIN employees 
-                                        ON attendance.employees_id = employees.employees_id
-                                    ORDER BY attendance.date DESC, attendance.sign_in DESC";
+                        attendance.id,  attendance.employees_id, 
+                        employees.first_name,employees.last_name,
+                        attendance.sign_on,attendance.sign_out,attendance.date 
+                        FROM attendance INNER JOIN employees 
+                        ON attendance.employees_id = employees.employees_id
+                       ORDER BY attendance.date DESC, attendance.sign_on DESC";
 
                         $print_data = $conn->query($att_SQL);
 
@@ -51,7 +49,7 @@ include_once("./haspermission.php");
                                     <td><?php echo $row['id']; ?></td>
                                     <td><?php echo $row['employees_id']; ?></td>
                                     <td><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></td>
-                                    <td><?php echo $row['sign_in']; ?></td>
+                                    <td><?php echo $row['sign_on']; ?></td>
                                     <td><?php echo $row['sign_out'] ? $row['sign_out'] : '---'; ?></td>
                                     <td><?php echo $row['date']; ?></td>
                                 </tr>

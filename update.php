@@ -2,6 +2,8 @@
 include("./config/config.php");
 include("./include/header.php");
 
+
+
 if (isset($_GET['id'])) {
     $id =  $_GET['id'];
     $sql = "SELECT * FROM employees WHERE employees_id = $id";
@@ -161,7 +163,9 @@ if (isset($_POST['update'])) {
                 <input type="file" class="form-control" name="profile_pic">
             </div>
         </div>
-           <button type="submit" name="update" class="btn btn-light btn-block waves-effect waves-light my-4">Update Employee</button>
+                <?php if (isset($employeePermissions['Update']) && $employeePermissions['Update'] == 1): ?>              
+                    <button type="submit" name="update" class="btn btn-light btn-block waves-effect waves-light my-4">Update Employee</button>
+            <?php endif; ?>
     </div>
 </form>
 

@@ -1,23 +1,25 @@
 <?php
 session_start();
+include("./haspermission.php");
 include("./include/header.php");
 include("./config/config.php");
+if (!isset($_SESSION['Roles_id'])) {
+    die("Please log in first!");
+}
+$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
+$rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
 ?>
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Roles Table</h1>
     </div>
+
     <div class="card shadow border-0">
-        <div class="card-header bg-primary text-white py-3">
-        </div>
+        <div class="card-header bg-primary text-white py-3"></div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover table-striped align-middle" id="dataTable" width="100%" cellspacing="0">
                     <thead class="thead-dark">
-                        <?php
-                        $Roles_employees = "SELECT Roles_id ,Roles_name FROM roles";
-                        $Roles_printe = $conn->query($Roles_employees);
-                        ?>
                         <tr>
                             <th>ID</th>
                             <th>Roles</th>
@@ -26,22 +28,30 @@ include("./config/config.php");
                     </thead>
                     <tbody>
                         <?php
-                        if ($Roles_printe->num_rows > 0) {
-                            while ($row = $Roles_printe->fetch_assoc()) {
+                        $Roles_query = "SELECT Roles_id, Roles_name FROM roles";
+                        $Roles_result = $conn->query($Roles_query);
+
+                        if ($Roles_result->num_rows > 0) {
+                            while ($row = $Roles_result->fetch_assoc()) {
+                                $_SESSION["Roles_name"] = $row["Roles_name"];
                         ?>
                                 <tr>
                                     <td><?php echo $row['Roles_id']; ?></td>
                                     <td><?php echo $row['Roles_name']; ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-primary">                                            
-                                            <a class="text-white" href="Roles_permission.php?id=<?php echo $row['Roles_id']; ?>">Roles_permission</a>
-                                        </button>
+                                        <?php if (isset($rolesPermissions['Update']) && $rolesPermissions['Update'] == 1): ?>
+                                            <a href="Roles_permission.php?id=<?php echo $row['Roles_id']; ?>" class="btn btn-primary text-white">
+                                                Manage Permissions
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="text-danger">No Update Permission</span>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                         <?php
                             }
                         } else {
-                            echo "<tr><td colspan='15' class='text-center'>No employees found</td></tr>";
+                            echo "<tr><td colspan='3' class='text-center'>No roles found</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -50,4 +60,5 @@ include("./config/config.php");
         </div>
     </div>
 </div>
-<?php include("./include/footer.php") ?>
+
+<?php include("./include/footer.php"); ?>
