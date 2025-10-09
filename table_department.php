@@ -3,19 +3,27 @@ session_start();
 include("./include/header.php");
 include("./config/config.php");
 include("./Backend/delete.php");
+include_once("./haspermission.php");
+
+if (!isset($_SESSION['Roles_id'])) {
+    die("Please log in first!");
+}
+$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
+$employeeDepartment = $rolePermissions['permissions']['Department'] ?? [];
 ?>
 
 <div class="container-fluid my-4">
-
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Employee Department Table</h1>
-        <?php if (isset($_SESSION['role_permissions']['add']) && $_SESSION['role_permissions']['add'] == 1): ?>
+
+        <?php if (isset($employeeDepartment['Add']) && $employeeDepartment['Add'] == 1): ?>
             <a href="department_add.php" class="btn btn-primary btn-sm">
                 <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Department
             </a>
+        <?php else: ?>
+            <span class="text-danger">You do not have permission to add a department!</span>
         <?php endif; ?>
     </div>
-
 
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white py-3">
@@ -33,7 +41,6 @@ include("./Backend/delete.php");
                     </thead>
                     <tbody>
                         <?php
-
                         $department_sql = "SELECT dempartment_id, dempartment_name FROM dempartment";
                         $print_data = $conn->query($department_sql);
 
@@ -44,14 +51,13 @@ include("./Backend/delete.php");
                                     <td><?php echo $row['dempartment_id']; ?></td>
                                     <td><?php echo $row['dempartment_name']; ?></td>
                                     <td>
-                                        <?php if (isset($_SESSION['role_permissions']['update']) && $_SESSION['role_permissions']['update'] == 1): ?>
+                                        <?php if (isset($employeeDepartment['Update']) && $employeeDepartment['Update'] == 1): ?>
                                             <a href="./department_updata.php?id=<?php echo $row['dempartment_id']; ?>" class="text-primary me-2">
                                                 <i class="fa-solid fa-pen"></i>
                                             </a>
                                         <?php endif; ?>
 
-
-                                        <?php if (isset($_SESSION['role_permissions']['delete']) && $_SESSION['role_permissions']['delete'] == 1): ?>
+                                        <?php if (isset($employeeDepartment['Delete']) && $employeeDepartment['Delete'] == 1): ?>
                                             <a href="./backend/department_Delete.php?id=<?php echo $row['dempartment_id']; ?>" class="text-danger">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>

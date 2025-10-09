@@ -1,25 +1,26 @@
 <?php
 session_start();
-include './haspermission.php';
 include './config/config.php';
-include './haspermission.php';
 
 if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = md5($_POST['password']);
+    $password = md5($_POST['password']); 
 
     $sql = "SELECT e.employees_id, u.username, u.password, e.Roles_id
-        FROM login_credentials u
-        INNER JOIN employees e ON u.employees_id = e.employees_id
-        WHERE u.username = '$username' AND u.password = '$password'";
+            FROM login_credentials u
+            INNER JOIN employees e ON u.employees_id = e.employees_id
+            WHERE u.username = '$username' AND u.password = '$password'";
     $result = $conn->query($sql);
 
-    if ($result && $result->num_rows == 1) {
+    if ($result && $result->num_rows === 1) {
         $row = $result->fetch_assoc();
+
+
         $_SESSION['employees_id'] = $row['employees_id'];
         $_SESSION['username'] = $row['username'];
-        $_SESSION['password'] = $row['password'];
         $_SESSION['Roles_id'] = $row['Roles_id'];
+
+
         header("Location: ./index.php");
         exit();
     } else {
@@ -29,8 +30,8 @@ if (isset($_POST['login'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
     <title>Login | Glassmorphism</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -193,5 +194,4 @@ if (isset($_POST['login'])) {
         </div>
     </form>
 </body>
-
 </html>

@@ -6,9 +6,6 @@ include("./config/config.php");
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Roles Table</h1>
-        <a href="add_Roles.php" class="btn btn-primary btn-sm">
-            <i class="fas fa-user-plus fa-sm text-white-50"></i> Add Roles
-        </a>
     </div>
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white py-3">

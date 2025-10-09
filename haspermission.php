@@ -1,23 +1,46 @@
 <?php
-session_start();
 include("./config/config.php");
-$R_id =$_SESSION['Roles_id'] ;
-function hasPermission($R_id) {
+function getRolePermissions($roleId) {
     global $conn;
-    if (!isset($_SESSION['Roles_id'])) {
-        echo "No role assigned.";
-        return;
+
+
+    $roleQuery = $conn->prepare("SELECT Roles_id, Roles_name FROM roles WHERE Roles_id = ?");
+    $roleQuery->bind_param("i", $roleId);
+    $roleQuery->execute();
+    $roleResult = $roleQuery->get_result();
+
+    if ($roleResult->num_rows == 0) {
+        return ["error" => "یہ role موجود نہیں ہے"];
     }
-    echo $sql = "SELECT Roles_id, Module, `Update`, `Delete`, `View`, `Add` 
-            FROM roles_permission 
-            WHERE Roles_id = $R_id 
-            LIMIT 1";
-    $result = $conn->query($sql);
-    if ($result && $result->num_rows > 0) {
-        $permissions = $result->fetch_assoc();
-        print_r($permissions);
-    } else {
-        echo "No permissions found for this role.";
+
+    $role = $roleResult->fetch_assoc();
+
+
+    $permQuery = $conn->prepare("SELECT Module, `Update`, `Delete`, `View`, `Add` FROM roles_permission WHERE Roles_id = ?");
+    $permQuery->bind_param("i", $roleId);
+    $permQuery->execute();
+    $permResult = $permQuery->get_result();
+
+    $permissions = [];
+    while ($row = $permResult->fetch_assoc()) {
+        $permissions[$row['Module']] = [
+            'Update' => $row['Update'],
+            'Delete' => $row['Delete'],
+            'View' => $row['View'],
+            'Add'    => $row['Add']
+        ];
     }
+
+    return [
+        "role" => $role,
+        "permissions" => $permissions
+    ];
 }
+
+
+$roleData = getRolePermissions(1); 
+
+// echo "<pre>";
+// print_r($roleData);
+// echo "</pre>";
 ?>

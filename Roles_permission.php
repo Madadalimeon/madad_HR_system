@@ -2,35 +2,31 @@
 session_start();
 include './config/config.php';
 include './include/header.php';
+
 if (!isset($_GET['id'])) {
-    echo $_GET;
     die("<div class='alert alert-danger'>Role ID not provided in URL!</div>");
 }
 
-$roleId = $_GET['id'];
+$roleId = intval($_GET['id']);
 $roleQuery = "SELECT Roles_id, Roles_name FROM roles WHERE Roles_id = $roleId";
 $roleResult = $conn->query($roleQuery);
 $role = $roleResult->fetch_assoc();
 
-$modules = ['Employees', 'Department', 'Attendance_table','Attendance','Roles' ];
+$modules = ['Employees', 'Department', 'Attendance_table','Attendance','Roles'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    foreach ($modules as  $module) {
+    foreach ($modules as $module) {
         $update = isset($_POST['update'][$module]) ? 1 : 0;
         $delete = isset($_POST['delete'][$module]) ? 1 : 0;
         $view   = isset($_POST['view'][$module]) ? 1 : 0;
         $add    = isset($_POST['add'][$module]) ? 1 : 0;
-
- 
         $check = $conn->prepare("SELECT COUNT(*) FROM roles_permission WHERE Roles_id = ? AND Module = ?");
         $check->bind_param("is", $roleId, $module);
         $check->execute();
         $check->bind_result($count);
         $check->fetch();
         $check->close();
-
         if ($count > 0) {
- 
             $stmt = $conn->prepare("
                 UPDATE roles_permission
                 SET `Update` = ?, `Delete` = ?, `View` = ?, `Add` = ?
@@ -39,9 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("iiiiis", $update, $delete, $view, $add, $roleId, $module);
             $stmt->execute();
             $stmt->close();
+        } else {
+            $stmt = $conn->prepare("
+                INSERT INTO roles_permission (Roles_id, Module, `Update`, `Delete`, `View`, `Add`)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ");
+            $stmt->bind_param("isiiii", $roleId, $module, $update, $delete, $view, $add);
+            $stmt->execute();
+            $stmt->close();
         }
     }
-
     echo "<div class='alert alert-success'>Permissions updated successfully for Role: <strong>" . $role['Roles_name'] . "</strong></div>";
 }
 $permissionsData = [];
@@ -53,9 +56,7 @@ while ($row = $permResult->fetch_assoc()) {
 ?>
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 text-gray-800">
-            Manage Permissions for: <?php echo $role['Roles_name']; ?>
-        </h1>
+        <h1 class="h3 text-gray-800">Manage Permissions for: <?php echo $role['Roles_name']; ?></h1>
     </div>
 
     <div class="card shadow border-0">
@@ -84,22 +85,10 @@ while ($row = $permResult->fetch_assoc()) {
                         <tr>
                             <td><?php echo $i++; ?></td>
                             <td><?php echo $module; ?></td>
-                            <td>
-                                <input type="checkbox" name="update[<?php echo $module; ?>]" class="form-check-input"
-                                    <?php echo $perm['Update'] ? 'checked' : ''; ?>>
-                            </td>
-                            <td>
-                                <input type="checkbox" name="delete[<?php echo $module; ?>]" class="form-check-input"
-                                    <?php echo $perm['Delete'] ? 'checked' : ''; ?>>
-                            </td>
-                            <td>
-                                <input type="checkbox" name="view[<?php echo $module; ?>]" class="form-check-input"
-                                    <?php echo $perm['View'] ? 'checked' : ''; ?>>
-                            </td>
-                            <td>
-                                <input type="checkbox" name="add[<?php echo $module; ?>]" class="form-check-input"
-                                    <?php echo $perm['Add'] ? 'checked' : ''; ?>>
-                            </td>
+                            <td><input type="checkbox" name="update[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Update'] ? 'checked' : ''; ?>></td>
+                            <td><input type="checkbox" name="delete[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Delete'] ? 'checked' : ''; ?>></td>
+                            <td><input type="checkbox" name="view[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['View'] ? 'checked' : ''; ?>></td>
+                            <td><input type="checkbox" name="add[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Add'] ? 'checked' : ''; ?>></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
