@@ -2,13 +2,17 @@
 session_start();
 include './config/config.php';
 include './include/header.php';
-
 if (!isset($_SESSION['Roles_id'])) {
     die("Please log in first!");
 }
+$attendancePermissionss = $rolePermissions['permissions']['Attendance'] ?? [];
 
-// $rolePermissions = getRolePermissions($_SESSION['Roles_id']);
-$employeePermissions = $rolePermissions['permissions']['Attendance'] ?? [];
+if (!isset($attendancePermissionss['View']) || $attendancePermissionss['View'] != 1) {
+    header("Location: ./index.php");
+    exit;
+}
+
+
 
 if (isset($_POST['sign_in'])) {
     $emp = $_SESSION['employees_id'];
@@ -30,7 +34,6 @@ if (isset($_POST['sign_in'])) {
         }
     }
 }
-
 if (isset($_POST['sign_out'])) {
     $emp = $_SESSION['employees_id'];
     $today = date('Y-m-d');
@@ -53,7 +56,6 @@ if (isset($_POST['sign_out'])) {
     }
 }
 ?>
-
 <style>
     .h {
         display: flex;
@@ -68,30 +70,29 @@ if (isset($_POST['sign_out'])) {
         </div>
     </div>
 </div>
-
-<div class="container my-5">
+<div class="container my-5">    
     <div class="row justify-content-center">
         <div class="col-md-6">
             <form method="post" class="text-center">
                 <div class="row">
-                    <?php if (isset($employeePermissions['Add']) && $employeePermissions['Add'] == 1): ?>
+                    <?php if (isset($attendancePermissionss['Add']) && $attendancePermissionss['Add'] == 1): ?>
                         <div class="col-6 mb-3">
                             <button type="submit" name="sign_in" class="btn btn-success w-100 py-3">
                                 <i class="fa-solid fa-right-to-bracket me-2"></i> Sign In
                             </button>
                         </div>
                     <?php else: ?>
-                        <span class="text-danger">You do not have permission to add an employee!</span>
+                        <span class="text-danger">You do not have permission to sign_in an employee!</span>
                     <?php endif; ?>
 
-                    <?php if (isset($employeePermissions['Add']) && $employeePermissions['Add'] == 1): ?>
+                    <?php if (isset($attendancePermissionss['Add']) && $attendancePermissionss['Add'] == 1): ?>
                         <div class="col-6 mb-3">
                             <button type="submit" name="sign_out" class="btn btn-danger w-100 py-3">
                                 <i class="fa-solid fa-right-from-bracket me-2"></i> Sign Out
                             </button>
                         </div>
                     <?php else: ?>
-                        <span class="text-danger">You do not have permission to add an employee!</span>
+                        <span class="text-danger">You do not have permission to sign_out an employee!</span>
                     <?php endif; ?>
                 </div>
             </form>

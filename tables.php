@@ -11,8 +11,10 @@ if (!isset($_SESSION['Roles_id'])) {
 include_once("./haspermission.php");
 $rolePermissions = getRolePermissions($_SESSION['Roles_id'] ?? 0);
 $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
-// $attendancePermissionss = $rolePermissions['permissions']['Attendance'] ?? [];
-// $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
+
+ if (!isset($employeePermissions['View']) && $employeePermissions['View'] == 1){
+            header("Location: ./index.php");
+ }
 
 ?>
 

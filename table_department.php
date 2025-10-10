@@ -10,6 +10,11 @@ if (!isset($_SESSION['Roles_id'])) {
 }
 $rolePermissions = getRolePermissions($_SESSION['Roles_id']);
 $employeeDepartment = $rolePermissions['permissions']['Department'] ?? [];
+
+if (!isset($departmentPermissions['View']) && $departmentPermissions['View'] == 1) {
+    header("Location: ./index.php");
+}
+
 ?>
 
 <div class="container-fluid my-4">
@@ -77,7 +82,4 @@ $employeeDepartment = $rolePermissions['permissions']['Department'] ?? [];
     </div>
 </div>
 
-<?php
- include("./include/footer.php"); 
- 
-?>
+<?php include("./include/footer.php"); ?>

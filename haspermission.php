@@ -31,7 +31,7 @@ if (isset($_SESSION["Roles_id"])) {
             "permissions" => $permissions
         ];
     }
-    $roleData = getRolePermissions($roleId); 
+    // $roleData = getRolePermissions($roleId); 
     // echo "<pre>";
     // print_r($roleData);
     // echo "</pre>";

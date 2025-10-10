@@ -1,5 +1,20 @@
+<?php
+
+
+include_once("./haspermission.php");
+$rolePermissions = getRolePermissions($_SESSION['Roles_id'] ?? 0);
+
+
+$employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
+$departmentPermissions = $rolePermissions['permissions']['Department'] ?? [];
+$attendancePermissions = $rolePermissions['permissions']['Attendance_table'] ?? [];
+$attendancePermissionss = $rolePermissions['permissions']['Attendance'] ?? [];
+$rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>SB Admin 2 - Dashboard</title>
+    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -42,66 +58,46 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <?php
-            $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
-            $departmentPermissions = $rolePermissions['permissions']['Department'] ?? [];
-            $attendancePermissionsTable = $rolePermissions['permissions']['Attendance_table'] ?? [];
-            $attendancePermissions = $rolePermissions['permissions']['Attendance'] ?? [];
-            $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
-            ?>
-
-            
             <?php if (!empty($employeePermissions['View']) && $employeePermissions['View'] == 1): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="tables.php">
                         <i class="fa-solid fa-user"></i>
-                        <span> Employees </span>
-                    </a>
+                        <span> Employees </span></a>
                 </li>
             <?php endif; ?>
 
+            
             
             <?php if (!empty($departmentPermissions['View']) && $departmentPermissions['View'] == 1): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="table_department.php">
                         <i class="fas fa-building"></i>
-                        <span>Department</span>
-                    </a>
+                        <span>Department</span></a>
                 </li>
             <?php endif; ?>
-
-            
-            <?php if (!empty($attendancePermissionsTable['View']) && $attendancePermissionsTable['View'] == 1): ?>
+            <?php if (!empty($attendancePermissions['View']) && $attendancePermissions['View'] == 1): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="attendance_table.php">
                         <i class="fa-solid fa-clipboard-user"></i>
-                        <span>Attendance Table</span>
-                    </a>
-                </li>
+                        <span>Attendance Table</span></a>                
             <?php endif; ?>
-
-            
-            <?php if (!empty($attendancePermissions['View']) && $attendancePermissions['View'] == 1): ?>
+                <?php if (!empty($attendancePermissionss['View']) && $attendancePermissionss['View'] == 1): ?>                
                 <li class="nav-item">
                     <a class="nav-link" href="Sign_in.php">
                         <i class="fa-solid fa-user-check"></i>
-                        <span>Mark Attendance</span>
-                    </a>
+                        <span>Mark Attendance</span></a>
                 </li>
             <?php endif; ?>
 
-            
             <?php if (!empty($rolesPermissions['View']) && $rolesPermissions['View'] == 1): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="Roles.php">
                         <i class="fa-solid fa-user-shield"></i>
-                        <span>Roles</span>
-                    </a>
+                        <span>Roles</span></a>
                 </li>
             <?php endif; ?>
 
-
-            
+            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->

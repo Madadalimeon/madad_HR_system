@@ -1,13 +1,18 @@
 <?php
 session_start();
 include("./haspermission.php");
+$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
+$rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
+if (!isset($rolesPermissions['View']) || $rolesPermissions['View'] != 1) {
+    header("Location: ./index.php");
+    exit;
+}
 include("./include/header.php");
 include("./config/config.php");
 if (!isset($_SESSION['Roles_id'])) {
     die("Please log in first!");
 }
-$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
-$rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
+
 ?>
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">

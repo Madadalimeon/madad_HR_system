@@ -1,7 +1,17 @@
 <?php
 session_start();
+include("./haspermission.php");
+$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
+$rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
+if (empty($rolesPermissions['Update'])) {
+    header("Location: ./index.php");
+    exit;
+}
+
 include './config/config.php';
 include './include/header.php';
+$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
+$rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
 
 
 if (!isset($_GET['id'])) {
@@ -13,7 +23,7 @@ $roleQuery = "SELECT Roles_id, Roles_name FROM roles WHERE Roles_id = $roleId";
 $roleResult = $conn->query($roleQuery);
 $role = $roleResult->fetch_assoc();
 
-$modules = ['Employees', 'Department', 'Attendance_table','Attendance','Roles'];
+$modules = ['Employees', 'Department', 'Attendance_table', 'Attendance', 'Roles'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($modules as $module) {
@@ -81,16 +91,16 @@ while ($row = $permResult->fetch_assoc()) {
                         <?php
                         $i = 1;
                         foreach ($modules as $module):
-                            $perm = $permissionsData[$module] ?? ['Update'=>0,'Delete'=>0,'View'=>0,'Add'=>0];
+                            $perm = $permissionsData[$module] ?? ['Update' => 0, 'Delete' => 0, 'View' => 0, 'Add' => 0];
                         ?>
-                        <tr>
-                            <td><?php echo $i++; ?></td>
-                            <td><?php echo $module; ?></td>
-                            <td><input type="checkbox" name="update[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Update'] ? 'checked' : ''; ?>></td>
-                            <td><input type="checkbox" name="delete[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Delete'] ? 'checked' : ''; ?>></td>
-                            <td><input type="checkbox" name="view[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['View'] ? 'checked' : ''; ?>></td>
-                            <td><input type="checkbox" name="add[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Add'] ? 'checked' : ''; ?>></td>
-                        </tr>
+                            <tr>
+                                <td><?php echo $i++; ?></td>
+                                <td><?php echo $module; ?></td>
+                                <td><input type="checkbox" name="update[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Update'] ? 'checked' : ''; ?>></td>
+                                <td><input type="checkbox" name="delete[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Delete'] ? 'checked' : ''; ?>></td>
+                                <td><input type="checkbox" name="view[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['View'] ? 'checked' : ''; ?>></td>
+                                <td><input type="checkbox" name="add[<?php echo $module; ?>]" class="form-check-input" <?php echo $perm['Add'] ? 'checked' : ''; ?>></td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

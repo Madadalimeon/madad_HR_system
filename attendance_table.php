@@ -2,9 +2,14 @@
 session_start();
 include './config/config.php';
 include './include/header.php';
-include_once("./haspermission.php");
-
-
+if (!isset($_SESSION['Roles_id'])) {
+    die("Please log in first!");
+}
+$attendancePermissions = $rolePermissions['permissions']['Attendance'] ?? [];
+if (!isset($attendancePermissions['View']) || $attendancePermissions['View'] != 1) {
+    header("Location: ./index.php");
+    exit;
+}
 
 
 
