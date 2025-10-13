@@ -4,9 +4,9 @@ include './config/config.php';
 
 if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = md5($_POST['password']); 
+    $password = md5($_POST['password']);
 
-    $sql = "SELECT e.employees_id, u.username, u.password, e.Roles_id
+    $sql = "SELECT e.employees_id, u.username, u.password, e.Roles_id, e.email
             FROM login_credentials u
             INNER JOIN employees e ON u.employees_id = e.employees_id
             WHERE u.username = '$username' AND u.password = '$password'";
@@ -15,21 +15,26 @@ if (isset($_POST['login'])) {
     if ($result && $result->num_rows === 1) {
         $row = $result->fetch_assoc();
 
-
         $_SESSION['employees_id'] = $row['employees_id'];
         $_SESSION['username'] = $row['username'];
         $_SESSION['Roles_id'] = $row['Roles_id'];
+        $_SESSION['email'] = $row['email'];        
 
+        $OTP = rand(100000, 999999);
+        $_SESSION['opt'] = $OTP;
 
-        header("Location: ./index.php");
-        exit();
+        header("Location:  email.php"); 
+        exit;
+
     } else {
         echo "<script>alert('Invalid username or password');</script>";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Login | Glassmorphism</title>
@@ -37,16 +42,14 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <style>
-        *,
-        *:before,
-        *:after {
+        * {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
         }
 
         body {
-            background-color: #080710;
+            background-color: #080710ff;
         }
 
         .background {
@@ -194,4 +197,5 @@ if (isset($_POST['login'])) {
         </div>
     </form>
 </body>
+
 </html>
