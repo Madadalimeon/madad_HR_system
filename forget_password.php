@@ -20,7 +20,7 @@ if (isset($_GET['email'])) {
             $mail->Host       = 'smtp.gmail.com';             
             $mail->SMTPAuth   = true;             
             $mail->Username   = 'madadalimemon90@gmail.com';             
-            $mail->Password   = 'hfcf ohbk htrg hgeg';             
+            $mail->Password   = 'hfcf ohbk htrg hgeg'; // App Password
             $mail->SMTPSecure = 'tls';             
             $mail->Port       = 587;              
 
@@ -36,17 +36,53 @@ if (isset($_GET['email'])) {
             $mail->AltBody = "Open this link to reset your password: $reset_link";              
 
             if ($mail->send()) {                 
-                $success = "<div class='alert alert-success text-center'>Reset link sent successfully to your email!</div>";             
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Email Sent!',
+                            text: 'Reset link sent successfully to your email!',
+                            confirmButtonColor: '#4e73df'
+                        });
+                    });
+                </script>";
             } else {                 
-                $error = "<div class='alert alert-danger text-center'>Failed to send email!</div>";             
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed!',
+                            text: 'Failed to send email. Try again!',
+                            confirmButtonColor: '#4e73df'
+                        });
+                    });
+                </script>";
             }         
         } catch (Exception $e) {             
-            $error = "<div class='alert alert-danger text-center'>Mailer Error: {$mail->ErrorInfo}</div>";         
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Mailer Error!',
+                        text: 'Something went wrong: {$mail->ErrorInfo}',
+                        confirmButtonColor: '#4e73df'
+                    });
+                });
+            </script>";
         }     
     } else {         
-        $error = "<div class='alert alert-danger text-center'>Email not found!</div>";     
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Email Not Found!',
+                    text: 'This email is not registered in our system.',
+                    confirmButtonColor: '#4e73df'
+                });
+            });
+        </script>";
     } 
-} 
+}
 ?>
 
 <!doctype html>
@@ -55,6 +91,7 @@ if (isset($_GET['email'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert CDN -->
     <title>Forget Password</title>
     <style>
         body {
@@ -79,8 +116,6 @@ if (isset($_GET['email'])) {
     </style>
 </head>
 <body>
-
-
 
 <div class="card p-4" style="width: 380px;">
     <h4 class="text-center mb-3">Forgot Password</h4>
