@@ -21,7 +21,8 @@ if (isset($_POST['login'])) {
         $_SESSION['email'] = $row['email'];        
 
         $OTP = rand(100000, 999999);
-        $_SESSION['opt'] = $OTP;
+        $_SESSION['otp'] = $OTP;
+        echo $OTP;
 
         header("Location:  email.php"); 
         exit;
@@ -171,6 +172,10 @@ if (isset($_POST['login'])) {
         .social i {
             margin-right: 4px;
         }
+        .forget_password{
+            padding: 10px;
+          text-decoration:none;
+         }
     </style>
 </head>
 
@@ -190,6 +195,10 @@ if (isset($_POST['login'])) {
         <input type="password" placeholder="Password" id="password" name="password" required>
 
         <button type="submit" name="login">Log In</button>
+
+        <div>
+            <a class="forget_password" href="forget_password.php">forget password</a>
+        </div>
 
         <div class="social">
             <div class="go"><i class="fab fa-google"></i> Google</div>

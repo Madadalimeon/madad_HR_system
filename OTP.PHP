@@ -1,6 +1,6 @@
 <?php
 session_start();
-$OTP = $_SESSION['opt'];
+$OTP = $_SESSION['otp'];
 echo $OTP;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
