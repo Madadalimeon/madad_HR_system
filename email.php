@@ -34,20 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         font-weight: 700;
     }
 </style>
-
 <body>
-
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card p-4" style="width: 400px;">
         <div class="text-center">
             <h3 class="mb-3">OTP Verification</h3>
             <h5>Get Your Code</h5>
             <p class="text-muted">Please enter the OTP code that was sent to your email address.</p>
-
             <?php if (!empty($error)) { ?>
                 <div class="alert alert-danger py-2"><?php echo $error; ?></div>
             <?php } ?>
-
             <form action="OTP.php" method="post">
                 <div class="mb-3">
                     <input type="text" name="OTP_Verification" class="form-control text-center" placeholder="Enter OTP Code" >
@@ -57,6 +53,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
-
 </body>
 </html>

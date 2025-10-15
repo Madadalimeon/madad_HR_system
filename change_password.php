@@ -13,10 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($new_password !== $confirm_password) {
         $error = "Passwords do not match.";
     } else {
-    $hashed_password = md5($new_password);
-        $sql = "UPDATE login_credentials lc JOIN employees e ON e.employees_id = lc.employees_id SET lc.password = '$hashed_password'WHERE e.email = '$email'";
+        $hashed_password = md5($new_password);
+        $sql = "UPDATE login_credentials lc 
+                JOIN employees e ON e.employees_id = lc.employees_id 
+                SET lc.password = '$hashed_password' 
+                WHERE e.email = '$email'";
         if ($conn->query($sql)) {
             header("Location: login.php");
+            exit;
         } else {
             $error = "Failed to update password: " . $conn->error;
         }
@@ -29,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Eye Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Forgot Password</title>
     <style>
         body {
@@ -55,6 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .btn-custom:hover {
             background: #2e59d9;
         }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 38px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -68,22 +80,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="alert alert-danger"><?= $error ?></div>
         <?php endif; ?>
 
-        <?php if($success): ?>
-            <div class="alert alert-success"><?= $success ?></div>
-        <?php endif; ?>
-
         <form method="post">
-            <div class="mb-3">
+            <div class="mb-3 position-relative">
                 <label class="form-label">New password</label>
-                <input type="password" name="new_password" class="form-control" placeholder="Enter new password" required>
+                <input type="password" id="new_password" name="new_password" class="form-control" placeholder="Enter new password" required>
+                <i class="fa-solid fa-eye-slash toggle-password" data-target="new_password"></i>
             </div>
-            <div class="mb-3">
+
+            <div class="mb-3 position-relative">
                 <label class="form-label">Confirm password</label>
-                <input type="password" name="confirm_password" class="form-control" placeholder="Confirm new password" required>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm new password" required>
+                <i class="fa-solid fa-eye-slash toggle-password" data-target="confirm_password"></i>
             </div>
+
             <button type="submit" class="btn btn-custom w-100 text-white">Reset Password</button>
         </form>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Password Toggle Script -->
+    <script>
+        document.querySelectorAll(".toggle-password").forEach(icon => {
+            icon.addEventListener("click", function() {
+                const targetId = this.getAttribute("data-target");
+                const input = document.getElementById(targetId);
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    this.classList.remove("fa-eye-slash");
+                    this.classList.add("fa-eye");
+                } else {
+                    input.type = "password";
+                    this.classList.remove("fa-eye");
+                    this.classList.add("fa-eye-slash");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

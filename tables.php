@@ -1,5 +1,16 @@
 <?php
 session_start();
+
+$inactive = 60;
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive)) {
+    session_unset();
+    session_destroy();
+    header("Location: ./Backend/logout.php");
+    exit;
+}
+$_SESSION['last_activity'] = time();
+
+
 include("./config/config.php");
 include("./include/header.php");
 
