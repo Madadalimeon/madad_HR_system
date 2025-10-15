@@ -13,8 +13,6 @@ if (isset($_POST['login'])) {
 
     if ($result && $result->num_rows === 1) {
         $row = $result->fetch_assoc();
-
-
         $_SESSION['employees_id'] = $row['employees_id'];
         $_SESSION['username'] = $row['username'];
         $_SESSION['Roles_id'] = $row['Roles_id'];
@@ -22,7 +20,9 @@ if (isset($_POST['login'])) {
         $_SESSION['last_activity'] = time();  
         $OTP = rand(100000, 999999);
         $_SESSION['otp'] = $OTP;
-
+        $_SESSION['otp_time'] = time(); 
+        $_SESSION['reset_link'] = time(); 
+         
     
 
         header("Location: email.php");

@@ -2,7 +2,7 @@
 include(__DIR__ . "/../config/config.php");
 
 if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+    $id = $_GET['id'];
     $sql = "DELETE FROM dempartment WHERE dempartment_id = $id";
 
     if ($conn->query($sql) === TRUE) {

@@ -20,15 +20,15 @@ if (isset($_GET['email'])) {
             $mail->Host       = 'smtp.gmail.com';             
             $mail->SMTPAuth   = true;             
             $mail->Username   = 'madadalimemon90@gmail.com';             
-            $mail->Password   = 'hfcf ohbk htrg hgeg'; // App Password
+            $mail->Password   = 'hfcf ohbk htrg hgeg'; 
             $mail->SMTPSecure = 'tls';             
             $mail->Port       = 587;              
 
-            $mail->setFrom('madadalimemon90@gmail.com', 'HR System');             
+            $mail->setFrom('madadalimemon90@gmail.com', 'HR System');               
             $mail->addAddress($email);             
             $mail->addReplyTo('madadalimemon90@gmail.com', 'HR Support');              
-
-            $reset_link = "http://localhost/madad_HR_system/change_password.php?email=" . urlencode($email);              
+            $time = time() + 60;
+            $reset_link = "http://localhost/madad_HR_system/change_password.php?email=" . urlencode($email) . "&expiretime=".urlencode($time)  ;              
 
             $mail->isHTML(true);             
             $mail->Subject = 'Password Reset Link';             
@@ -91,7 +91,7 @@ if (isset($_GET['email'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     <title>Forget Password</title>
     <style>
         body {

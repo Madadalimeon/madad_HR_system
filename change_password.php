@@ -4,6 +4,23 @@ include("./config/config.php");
 if (!isset($_GET['email'])) {
     die("Email is required.");
 }
+
+
+$_SESSION['last_activity'] = time();
+
+if (isset($_GET['expiretime'])) {
+    $expire_time = $_GET['expiretime'];
+    $newtime = time() ;
+    
+    if ($expire_time < $newtime ) {
+        session_unset();
+        session_destroy();
+        header("Location: login.php");
+        exit();
+    } 
+}
+
+
 $email = mysqli_real_escape_string($conn, $_GET['email']);
 $error = "";
 $success = "";
@@ -33,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for Eye Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Forgot Password</title>
     <style>
