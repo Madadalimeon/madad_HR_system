@@ -3,7 +3,6 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $enteredOTP = $_POST['OTP_Verification'];
     if ($enteredOTP == $_SESSION["OTP"]) {
-        $_SESSION['user_logged_in'] = $_SESSION['email']; 
         unset($_SESSION["OTP"]);
         header("Location: index.php");
         exit;

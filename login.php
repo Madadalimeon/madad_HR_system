@@ -23,8 +23,6 @@ if (isset($_POST['login'])) {
         $_SESSION['otp_time'] = time(); 
         $_SESSION['reset_link'] = time(); 
          
-    
-
         header("Location: email.php");
         exit();
     } else {

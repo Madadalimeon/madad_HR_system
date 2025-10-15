@@ -17,14 +17,11 @@ $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
 if (!isset($_GET['id'])) {
     die("<div class='alert alert-danger'>Role ID not provided in URL!</div>");
 }
-
 $roleId = $_GET['id'];
 $roleQuery = "SELECT Roles_id, Roles_name FROM roles WHERE Roles_id = $roleId";
 $roleResult = $conn->query($roleQuery);
 $role = $roleResult->fetch_assoc();
-
 $modules = ['Employees', 'Department', 'Attendance_table', 'Attendance', 'Roles'];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($modules as $module) {
         $update = isset($_POST['update'][$module]) ? 1 : 0;
