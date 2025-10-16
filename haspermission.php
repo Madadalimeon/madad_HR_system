@@ -10,7 +10,7 @@ if (isset($_SESSION["Roles_id"])) {
         $roleQuery->execute();
         $roleResult = $roleQuery->get_result();
         if ($roleResult->num_rows == 0) {
-            return ["error" => "یہ role موجود نہیں ہے"];
+                    return ["error" => "This role does not exist"];
         }
         $role = $roleResult->fetch_assoc();
         $permQuery = $conn->prepare("SELECT Module, `Update`, `Delete`, `View`, `Add` FROM roles_permission WHERE Roles_id = ?");
@@ -31,9 +31,5 @@ if (isset($_SESSION["Roles_id"])) {
             "permissions" => $permissions
         ];
     }
-    // $roleData = getRolePermissions($roleId); 
-    // echo "<pre>";
-    // print_r($roleData);
-    // echo "</pre>";
 }
 ?>
