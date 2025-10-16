@@ -7,13 +7,10 @@ if (empty($rolesPermissions['Update'])) {
     header("Location: ./index.php");
     exit;
 }
-
 include './config/config.php';
 include './include/header.php';
 $rolePermissions = getRolePermissions($_SESSION['Roles_id']);
 $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
-
-
 if (!isset($_GET['id'])) {
     die("<div class='alert alert-danger'>Role ID not provided in URL!</div>");
 }
@@ -66,7 +63,6 @@ while ($row = $permResult->fetch_assoc()) {
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Manage Permissions</h1>
     </div>
-
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white py-3">
             <h5 class="mb-0">Permissions Settings</h5>
@@ -101,7 +97,6 @@ while ($row = $permResult->fetch_assoc()) {
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-
                 <div class="text-end mt-3">
                     <button type="submit" class="btn btn-primary px-4">Save Permissions</button>
                 </div>
@@ -109,5 +104,4 @@ while ($row = $permResult->fetch_assoc()) {
         </div>
     </div>
 </div>
-
 <?php include './include/footer.php'; ?>

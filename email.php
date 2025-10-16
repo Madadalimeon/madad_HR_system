@@ -1,5 +1,15 @@
 <?php
 session_start();
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
+if (!isset($_SESSION['OTP'])) {
+    $OTP = rand(100000, 999999);
+    $_SESSION['OTP'] = $OTP;
+} else {
+    $OTP = $_SESSION['OTP'];
+}
+$error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $enteredOTP = $_POST['OTP_Verification'];
     if ($enteredOTP == $_SESSION["OTP"]) {
@@ -10,7 +20,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Invalid OTP, please try again!";
     }
 }
+try {
+    $mail = new PHPMailer(true);
+    $mail->SMTPDebug = 0;
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'madadalimemon90@gmail.com'; 
+    $mail->Password   = 'hfcf ohbk htrg hgeg';       
+    $mail->SMTPSecure = 'tls';
+    $mail->Port       = 587;
+    $mail->setFrom('madadalimemon90@gmail.com', 'HR System'); 
+    $mail->addAddress('madadalim903@gmail.com');             
+    $mail->addReplyTo('madadalimemon90@gmail.com', 'HR System');
+
+    $mail->isHTML(true);
+    $mail->Subject = 'OTP Verification Code';
+    $mail->Body    = "Hello,<br><br>Your OTP verification code is: <b>$OTP</b><br><br>Do not share this code with anyone.";
+    $mail->AltBody = "Hello, Your OTP verification code is: $OTP. Do not share this code with anyone.";
+
+    $mail->send();
+    
+} catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -43,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php if (!empty($error)) { ?>
                 <div class="alert alert-danger py-2"><?php echo $error; ?></div>
             <?php } ?>
-            <form action="OTP.php" method="post">
+            <form  method="post">
                 <div class="mb-3">
                     <input type="text" name="OTP_Verification" class="form-control text-center" placeholder="Enter OTP Code" >
                 </div>
