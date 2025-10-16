@@ -64,7 +64,7 @@ while ($row = $permResult->fetch_assoc()) {
 ?>
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 text-gray-800">Manage Permissions for: <?php echo $role['Roles_name']; ?></h1>
+        <h1 class="h3 text-gray-800">Manage Permissions</h1>
     </div>
 
     <div class="card shadow border-0">

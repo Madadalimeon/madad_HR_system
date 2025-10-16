@@ -1,11 +1,7 @@
 <?php
-
 session_start();
 include './config/config.php';
 include_once './include/header.php';
-
-
-
 
 if (isset($_POST['submit'])) {
     $first_name       = $_POST["first_name"];
@@ -24,9 +20,8 @@ if (isset($_POST['submit'])) {
     $address          = $_POST["address"];
     $username         = $_POST["username"];
     $password         = md5($_POST["password"]);
-    $role_table       = $_POST["role_table"];
+    $role_table       = intval($_POST["role_table"]);
 
-    
     $file_name = "";
     if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === 0) {
         $file_name = $_FILES['profile_pic']['name'];
@@ -39,15 +34,22 @@ if (isset($_POST['submit'])) {
         move_uploaded_file($file_tmp, "uploads/" . $file_name);
     }
 
-    
+    var_dump($role_table);
+
+    $sql_Roles = "SELECT Roles_name AS rName FROM roles WHERE Roles_id = '$role_table'";
+    $role_query = mysqli_query($conn, $sql_Roles);
+    $role_data = mysqli_fetch_assoc($role_query);
+    $role_name = $role_data['rName'];
+
     $add_query = "INSERT INTO employees 
-    (first_name,last_name,email,mobile_no,dob,date_of_joining,position,department,shift,role,country,state,city,address,profile_pic,Roles_id) 
+    (first_name,last_name,email,mobile_no,dob,date_of_joining,position,department,shift,role,country,state,city,address,profile_pic,Roles_id,roles_name) 
     VALUES 
     ('$first_name','$last_name','$email','$mobile_no','$dob','$date_of_joining','$position','$department','$shift','$role','$country','$state',
-    '$city','$address','$file_name','$role_table')";
+    '$city','$address','$file_name','$role_table','$role_name')";
 
     if ($conn->query($add_query)) {
         $employee_id = $conn->insert_id;
+
 
         $sql = "INSERT INTO login_credentials (username, password, employees_id) VALUES ('$username', '$password', '$employee_id')";
         $conn->query($sql);
@@ -55,14 +57,12 @@ if (isset($_POST['submit'])) {
         $success_message = "New employee <strong>$first_name $last_name</strong> has been successfully added!";
     }
 }
-
 $S_department = "SELECT dempartment_id ,dempartment_name FROM dempartment";
 $result = $conn->query($S_department);
 
 $S_roles = "SELECT Roles_id, Roles_name FROM roles";
 $roles_result = $conn->query($S_roles);
-?>
-
+?> 
 <div class="container mt-5">
     <form method="post" enctype="multipart/form-data">
         <h2 class="text-center mb-4">Add New Employee</h2>

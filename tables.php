@@ -31,7 +31,7 @@ $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
 
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 text-gray-800">Employee Data Table</h1>
+        <h1 class="h3 text-gray-800">Employee  Table</h1>
         <div class="mt-4">
             <?php if(isset($employeePermissions['Add']) && $employeePermissions['Add'] == 1): ?>
                 <a href="add-employee.php" class="btn btn-primary btn-sm">
@@ -57,13 +57,14 @@ $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
                             <th>Email</th>
                             <th>Mobile No</th>
                             <th>DOB</th>
+                            <th>Roles</th>
+                            <th>OTP_check</th>
                             <th>Action</th>
-                            <th>Roles_id</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $sql_employees = "SELECT employees_id, first_name, last_name, email, mobile_no, dob, date_of_joining, position, Roles_id FROM employees";
+                        $sql_employees = "SELECT employees_id, first_name, last_name, email, mobile_no, dob, date_of_joining, position,  roles_name FROM employees";
                         $print_data = $conn->query($sql_employees);
 
                         if ($print_data->num_rows > 0):
@@ -75,6 +76,8 @@ $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
                             <td><?php echo $row['email']; ?></td>
                             <td><?php echo $row['mobile_no']; ?></td>
                             <td><?php echo $row['dob']; ?></td>
+                            <td><?php echo $row['roles_name']; ?></td>
+                            <td><?php echo $row['roles_name']; ?></td>
                             <td>
                                 <?php if(isset($employeePermissions['Update']) && $employeePermissions['Update'] == 1): ?>
                                     <a href="update.php?id=<?php echo $row['employees_id']; ?>">
@@ -88,7 +91,6 @@ $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
                                     </a>
                                 <?php endif; ?>
                             </td>
-                            <td><?php echo $row['Roles_id']; ?></td>
                         </tr>
                         <?php
                             endwhile;
