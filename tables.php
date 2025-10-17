@@ -17,7 +17,7 @@ include_once("./haspermission.php");
 $rolePermissions = getRolePermissions($_SESSION['Roles_id'] ?? 0);
 $employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['otp_data'])) {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     foreach ($_POST['otp_data'] as $emp_id => $status) {
         $check_sql = "SELECT OTP_Check FROM employees WHERE employees_id = '$emp_id'";
         $check_result = mysqli_query($conn, $check_sql);

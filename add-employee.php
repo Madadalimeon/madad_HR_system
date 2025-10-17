@@ -34,8 +34,6 @@ if (isset($_POST['submit'])) {
         move_uploaded_file($file_tmp, "uploads/" . $file_name);
     }
 
-    var_dump($role_table);
-
     $sql_Roles = "SELECT Roles_name AS rName FROM roles WHERE Roles_id = '$role_table'";
     $role_query = mysqli_query($conn, $sql_Roles);
     $role_data = mysqli_fetch_assoc($role_query);
@@ -49,11 +47,8 @@ if (isset($_POST['submit'])) {
 
     if ($conn->query($add_query)) {
         $employee_id = $conn->insert_id;
-
-
         $sql = "INSERT INTO login_credentials (username, password, employees_id) VALUES ('$username', '$password', '$employee_id')";
         $conn->query($sql);
-
         $success_message = "New employee <strong>$first_name $last_name</strong> has been successfully added!";
     }
 }

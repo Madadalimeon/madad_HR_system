@@ -1,5 +1,4 @@
 <?php
-
 $inactive = 3600;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive)) {
     session_unset();

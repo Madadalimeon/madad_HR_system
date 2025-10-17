@@ -36,7 +36,6 @@ if (isset($_POST['update'])) {
     $file_name = $employee['profile_pic'];
     if (!empty($_FILES['profile_pic']['name'])) {
         $file_name = time() . "_" . basename($_FILES['profile_pic']['name']);
-        echo $file_name = time() . "_" . basename($_FILES['profile_pic']['name']);
         $file_tmp  = $_FILES['profile_pic']['tmp_name'];
         if (!is_dir("uploads")) {
             mkdir("uploads", 0777, true);
@@ -70,7 +69,6 @@ if (isset($_POST['update'])) {
 }
 ?>
 
-<!-- Update Form -->
 <form method="post" enctype="multipart/form-data">
     <div class="container mt-5">
         <h2 class="text-center">Update Employee</h2>

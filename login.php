@@ -21,8 +21,6 @@ if (isset($_POST['login'])) {
         $_SESSION['otp_time'] = time();
         $_SESSION['reset_link'] = time();
         $e_id = $_SESSION['employees_id'];
-
-
         $OPT_query = "SELECT OTP_Check FROM employees WHERE employees_id ='$e_id'";
         $stmt = mysqli_query($conn, $OPT_query)->fetch_assoc();
         $OTP  = intval($stmt['OTP_Check']);
@@ -54,7 +52,7 @@ if (isset($_POST['login'])) {
     <div class="card shadow-lg p-4" style="width: 380px;">
         <h3 class="text-center mb-3">Login</h3>
 
-        <form action="login.php" method="POST">
+        <form method="POST">
             <div class="mb-3">
                 <label class="form-label" for="username">Username</label>
                 <input type="text" class="form-control" placeholder="Email or Username" id="username" name="username" required>
