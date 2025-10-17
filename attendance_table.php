@@ -10,6 +10,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
 $_SESSION['last_activity'] = time();
 
 
+
 session_start();
 include './config/config.php';
 include './include/header.php';
@@ -17,6 +18,7 @@ if (!isset($_SESSION['Roles_id'])) {
     die("Please log in first!");
 }
 $attendancePermissions = $rolePermissions['permissions']['Attendance'] ?? [];
+print_r($attendancePermissions);
 if (!isset($attendancePermissions['View']) || $attendancePermissions['View'] != 1) {
     header("Location: ./index.php");
     exit;
@@ -24,6 +26,7 @@ if (!isset($attendancePermissions['View']) || $attendancePermissions['View'] != 
 
 
 
+$emp = $_SESSION['employees_id'];
 ?>
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -54,6 +57,7 @@ if (!isset($attendancePermissions['View']) || $attendancePermissions['View'] != 
                         attendance.sign_on,attendance.sign_out,attendance.date 
                         FROM attendance INNER JOIN employees 
                         ON attendance.employees_id = employees.employees_id
+                        WHERE employees.employees_id= '$emp'
                        ORDER BY attendance.date DESC, attendance.sign_on DESC";
 
                         $print_data = $conn->query($att_SQL);

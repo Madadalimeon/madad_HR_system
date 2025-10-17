@@ -37,7 +37,7 @@ if (isset($_GET['email'])) {
 
             if ($mail->send()) {                 
                 echo "<script>
-                    document.addEventListener('DOMContentLoaded', function() {
+                    document.addEventListener]('DOMContentLoaded', function() {
                         Swal.fire({
                             icon: 'success',
                             title: 'Email Sent!',
