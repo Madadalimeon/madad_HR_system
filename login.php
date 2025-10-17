@@ -4,7 +4,6 @@ include './config/config.php';
 if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = md5($_POST['password']);
-
     $sql = "SELECT e.employees_id, u.username, u.password, e.Roles_id, e.email
             FROM login_credentials u
             INNER JOIN employees e ON u.employees_id = e.employees_id
