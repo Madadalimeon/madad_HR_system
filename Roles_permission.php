@@ -9,8 +9,6 @@ if (empty($rolesPermissions['Update'])) {
 }
 include './config/config.php';
 include './include/header.php';
-$rolePermissions = getRolePermissions($_SESSION['Roles_id']);
-$rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
 if (!isset($_GET['id'])) {
     die("<div class='alert alert-danger'>Role ID not provided in URL!</div>");
 }

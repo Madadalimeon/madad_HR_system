@@ -21,7 +21,6 @@ if (isset($_POST['submit'])) {
         <button type="submit" name="submit" class="btn btn-light btn-block waves-effect waves-light my-4">Add Department</button>
     </div>
 </form>
-
 <?php
 include("./include/footer.php");
 ?>

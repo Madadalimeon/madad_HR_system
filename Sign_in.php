@@ -7,8 +7,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
     exit;
 }
 $_SESSION['last_activity'] = time();
-
-
 session_start();
 include './config/config.php';
 include './include/header.php';
@@ -16,22 +14,16 @@ if (!isset($_SESSION['Roles_id'])) {
     die("Please log in first!");
 }
 $attendancePermissionss = $rolePermissions['permissions']['Attendance'] ?? [];
-
 if (!isset($attendancePermissionss['View']) || $attendancePermissionss['View'] != 1) {
     header("Location: ./index.php");
     exit;
 }
-
-
-
 if (isset($_POST['sign_in'])) {
     $emp = $_SESSION['employees_id'];
     $today = date('Y-m-d');
     $sign_in_time = date('H:i:s');
-
     $check_sql = "SELECT * FROM attendance WHERE employees_id = '$emp' AND date = '$today'";
     $check_result = $conn->query($check_sql);
-
     if ($check_result->num_rows > 0) {
         echo "<div class='alert alert-info text-center'>You have already signed in today.</div>";
     } else {
@@ -51,7 +43,6 @@ if (isset($_POST['sign_out'])) {
 
     $check_sql = "SELECT * FROM attendance WHERE employees_id = '$emp' AND date = '$today'";
     $check_result = $conn->query($check_sql);
-
     if ($check_result->num_rows == 0) {
         echo "<div class='alert alert-warning text-center'>You haven't signed in today.</div>";
     } else {
@@ -72,7 +63,6 @@ if (isset($_POST['sign_out'])) {
         justify-content: center;
     }
 </style>
-
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -94,7 +84,6 @@ if (isset($_POST['sign_out'])) {
                     <?php else: ?>
                         <span class="text-danger">You do not have permission to sign_in an employee!</span>
                     <?php endif; ?>
-
                     <?php if (isset($attendancePermissionss['Add']) && $attendancePermissionss['Add'] == 1): ?>
                         <div class="col-6 mb-3">
                             <button type="submit" name="sign_out" class="btn btn-danger w-100 py-3">
@@ -109,7 +98,6 @@ if (isset($_POST['sign_out'])) {
         </div>
     </div>
 </div>
-
 <?php
 include './include/footer.php';
 ?>

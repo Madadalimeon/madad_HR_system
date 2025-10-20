@@ -116,8 +116,6 @@ if (isset($_POST['update'])) {
                     ?>
                 </select>
             </div>
-
-    
             <div class="col-6 mb-3">
                 <label>Choose Role</label>
                 <select name="role_table" class="form-select">
@@ -167,7 +165,6 @@ if (isset($_POST['update'])) {
             <?php endif; ?>
     </div>
 </form>
-
 <?php
 include("./include/footer.php");
 ?>

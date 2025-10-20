@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $inactive = 3600;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive)) {
     session_unset();
@@ -9,8 +8,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
     exit;
 }
 $_SESSION['last_activity'] = time();
-
-
 include("./haspermission.php");
 $rolePermissions = getRolePermissions($_SESSION['Roles_id']);
 $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
@@ -23,13 +20,11 @@ include("./config/config.php");
 if (!isset($_SESSION['Roles_id'])) {
     die("Please log in first!");
 }
-
 ?>
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 text-gray-800">Roles Table</h1>
     </div>
-
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white py-3"></div>
         <div class="card-body">
@@ -76,5 +71,4 @@ if (!isset($_SESSION['Roles_id'])) {
         </div>
     </div>
 </div>
-
 <?php include("./include/footer.php"); ?>
