@@ -23,9 +23,7 @@ if (isset($_POST['login'])) {
         $e_id = $_SESSION['employees_id'];
         $OPT_query = "SELECT OTP_Check FROM employees WHERE employees_id ='$e_id'";
         $stmt = mysqli_query($conn, $OPT_query)->fetch_assoc();
-        $OTP  = intval($stmt['OTP_Check']);
-        
-
+        $OTP  = intval($stmt['OTP_Check']);        
         if ($OTP === 1) {
             header("Location: email.php");
             exit();
