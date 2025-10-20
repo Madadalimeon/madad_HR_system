@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $update_sql = "UPDATE employees SET OTP_Check = '$otp_value' WHERE employees_id = '$emp_id'";
         mysqli_query($conn, $update_sql);
     }
-    echo "<script>alert('OTP Status Updated Successfully!');</script>";
-}
+    echo "<div class='alert alert-success' role='alert'>OTP Status Updated Successfully</div>";
+}       
 
 ?>
 
@@ -46,67 +46,69 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     </div>
 
     <form method="post">
-    <div class="card shadow-lg border-0">
-        <div class="card-header bg-gradient-primary text-white">
-            <h6 class="m-0 font-weight-bold">Manage Employee OTP Access</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Mobile No</th>
-                            <th>DOB</th>
-                            <th>Roles</th>
-                            <?php if ($_SESSION['Roles_id'] == 15): ?>
-                                <th class="text-center">Allow OTP Login</th>
-                            <?php endif; ?>
-                            <th class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT employees_id, first_name, last_name, email, mobile_no, dob, roles_name, OTP_Check FROM employees";
-                        $result = $conn->query($sql);
-                        while ($row = $result->fetch_assoc()):
-                        ?>
-                        <tr>
-                            <td><?= $row['employees_id']; ?></td>
-                            <td><?= $row['first_name'] . ' ' . $row['last_name']; ?></td>
-                            <td><?= $row['email']; ?></td>
-                            <td><?= $row['mobile_no']; ?></td>
-                            <td><?= $row['dob']; ?></td>
-                            <td><?= $row['roles_name']; ?></td>
-
-                            <?php if ($_SESSION['Roles_id'] == 15): ?>
-                                <td class="text-center">
-                                    <input type="checkbox" class="otp-checkbox" name="otp_data[<?= $row['employees_id']; ?>]" <?= $row['OTP_Check'] == 1 ? 'checked' : '' ?>>
-                                </td>
-                            <?php endif; ?>
-
-                            <td class="text-center">
-                                <?php if ($employeePermissions['Update'] == 1): ?>
-                                    <a href="update.php?id=<?= $row['employees_id']; ?>" class="text-primary mx-2"><i class="fa-solid fa-pen"></i></a>
-                                <?php endif; ?>
-                                <?php if ($employeePermissions['Delete'] == 1): ?>
-                                    <a href="./Backend/delete.php?id=<?= $row['employees_id']; ?>" onclick="return confirm('Are you sure?')" class="text-danger"><i class="fa-solid fa-trash"></i></a>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-gradient-primary text-white">
+                <h6 class="m-0 font-weight-bold">Manage Employee OTP Access</h6>
             </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Mobile No</th>
+                                <th>DOB</th>
+                                <th>Roles</th>
+                                <?php if ($_SESSION['Roles_id'] == 15): ?>
+                                    <th class="text-center">Allow OTP Login</th>
+                                <?php endif; ?>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT employees_id, first_name, last_name, email, mobile_no, dob, roles_name, OTP_Check FROM employees";
+                            $result = $conn->query($sql);
+                            while ($row = $result->fetch_assoc()):
+                            ?>
+                                <tr>
+                                    <td><?= $row['employees_id']; ?></td>
+                                    <td><?= $row['first_name'] . ' ' . $row['last_name']; ?></td>
+                                    <td><?= $row['email']; ?></td>
+                                    <td><?= $row['mobile_no']; ?></td>
+                                    <td><?= $row['dob']; ?></td>
+                                    <td><?= $row['roles_name']; ?></td>
 
-            <div class="text-end mt-3">
-                <button type="submit" class="btn btn-primary save-btn shadow"> Save OTP </button>
+                                    <?php if ($_SESSION['Roles_id'] == 15): ?>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="otp-checkbox" name="otp_data[<?= $row['employees_id']; ?>]" <?= $row['OTP_Check'] == 1 ? 'checked' : '' ?>>
+                                        </td>
+                                    <?php endif; ?>
+
+                                    <td class="text-center">
+                                        <?php if ($employeePermissions['Update'] == 1): ?>
+                                            <a href="update.php?id=<?= $row['employees_id']; ?>" class="text-primary mx-2"><i class="fa-solid fa-pen"></i></a>
+                                        <?php endif; ?>
+                                        <?php if ($employeePermissions['Delete'] == 1): ?>
+                                            <a href="./Backend/delete.php?id=<?= $row['employees_id']; ?>" onclick="return confirm('Are you sure?')" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-end mt-3">
+                    <?php if ($_SESSION['Roles_id'] == 15): ?>
+                        <button type="submit" class="btn btn-primary save-btn shadow"> Save OTP </button>
+                    <?php endif; ?>
+                </div>
+
             </div>
-
         </div>
-    </div>
     </form>
 </div>
 

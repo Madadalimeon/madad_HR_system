@@ -4,13 +4,9 @@ include("./config/config.php");
 include("./include/header.php");
 if (isset($_POST['submit'])) {
     $department = $_POST['department'];
-
-
-
-
     $add_department_query = "INSERT INTO dempartment (dempartment_name) VALUES ('$department')";
     $conn->query($add_department_query);
-        
+        echo "<div class='alert alert-success' role='alert'>New Department Add Successfully</div>";
 }
 ?>
 <form method="post">

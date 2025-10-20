@@ -51,6 +51,7 @@ if (isset($_POST['submit'])) {
         $conn->query($sql);
         $success_message = "New employee <strong>$first_name $last_name</strong> has been successfully added!";
     }
+      echo "<div class='alert alert-success' role='alert'>New Employees Add Successfully</div>";
 }
 $S_department = "SELECT dempartment_id ,dempartment_name FROM dempartment";
 $result = $conn->query($S_department);
@@ -59,7 +60,7 @@ $S_roles = "SELECT Roles_id, Roles_name FROM roles";
 $roles_result = $conn->query($S_roles);
 ?> 
 <div class="container mt-5">
-    <form method="post" enctype="multipart/form-data">
+    <form class="from_Add" method="post" enctype="multipart/form-data">
         <h2 class="text-center mb-4">Add New Employee</h2>
         <div class="row">
             <div class="col-md-6 mb-3">

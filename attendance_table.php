@@ -18,14 +18,10 @@ if (!isset($_SESSION['Roles_id'])) {
     die("Please log in first!");
 }
 $attendancePermissions = $rolePermissions['permissions']['Attendance'] ?? [];
-print_r($attendancePermissions);
 if (!isset($attendancePermissions['View']) || $attendancePermissions['View'] != 1) {
     header("Location: ./index.php");
     exit;
 }
-
-
-
 $emp = $_SESSION['employees_id'];
 ?>
 <div class="container-fluid my-4">
