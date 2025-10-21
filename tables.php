@@ -15,21 +15,79 @@ if (!isset($_SESSION['Roles_id'])) {
 }
 include_once("./haspermission.php");
 $rolePermissions = getRolePermissions($_SESSION['Roles_id'] ?? 0);
-$employeePnermissions = $rolePermissions['permissions']['Employees'] ?? [];
+$employeePermissions = $rolePermissions['permissions']['Employees'] ?? [];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    foreach ($_POST['otp_data'] as $emp_id => $status) {
-        $check_sql = "SELECT OTP_Check FROM employees WHERE employees_id = '$emp_id'";
-        $check_result = mysqli_query($conn, $check_sql);
-        $row = mysqli_fetch_assoc($check_result);
-        $otp_value = ($row['OTP_Check'] == 1) ? 0 : 1;
+    $emp_query = "SELECT employees_id FROM employees";
+    $emp_result = mysqli_query($conn, $emp_query);
+
+    while ($emp = mysqli_fetch_assoc($emp_result)) {
+        $emp_id = $emp['employees_id'];
+        $otp_value = isset($_POST['otp_data'][$emp_id]) ? 1 : 0;
         $update_sql = "UPDATE employees SET OTP_Check = '$otp_value' WHERE employees_id = '$emp_id'";
         mysqli_query($conn, $update_sql);
     }
-    echo "<div class='alert alert-success' role='alert'>OTP Status Updated Successfully</div>";
-}       
 
+    echo "<div class='alert alert-success' role='alert'>OTP Status Updated Successfully</div>";
+}
 ?>
+
+<style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
 
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -83,7 +141,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                                     <?php if ($_SESSION['Roles_id'] == 15): ?>
                                         <td class="text-center">
-                                            <input type="checkbox" class="otp-checkbox" name="otp_data[<?= $row['employees_id']; ?>]" <?= $row['OTP_Check'] == 1 ? 'checked' : '' ?>>
+                                            <label class="switch">
+                                                <input type="checkbox" class="otp-checkbox" name="otp_data[<?= $row['employees_id']; ?>]" <?= $row['OTP_Check'] == 1 ? 'checked' : '' ?>>
+                                                <span class="slider round"></span>
+                                            </label>                                        
                                         </td>
                                     <?php endif; ?>
 
