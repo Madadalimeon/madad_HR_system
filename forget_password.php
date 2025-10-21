@@ -3,16 +3,13 @@ include("./config/config.php");
 use PHPMailer\PHPMailer\PHPMailer; 
 use PHPMailer\PHPMailer\Exception; 
 require 'vendor/autoload.php'; 
-
 $error = ""; 
 $success = ""; 
 $email = ""; 
-
 if (isset($_GET['email'])) {     
     $email = mysqli_real_escape_string($conn, $_GET['email']);     
     $sql = "SELECT email FROM employees WHERE email = '$email' LIMIT 1";     
     $result = $conn->query($sql);     
-
     if ($result && $result->num_rows > 0) {         
         $mail = new PHPMailer(true);         
         try {             
@@ -23,18 +20,15 @@ if (isset($_GET['email'])) {
             $mail->Password   = 'hfcf ohbk htrg hgeg'; 
             $mail->SMTPSecure = 'tls';             
             $mail->Port       = 587;              
-
             $mail->setFrom('madadalimemon90@gmail.com', 'HR System');               
             $mail->addAddress($email);             
             $mail->addReplyTo('madadalimemon90@gmail.com', 'HR Support');              
             $time = time() + 60;
             $reset_link = "http://localhost/madad_HR_system/change_password.php?email=" . urlencode($email) . "&expiretime=".urlencode($time)  ;              
-
             $mail->isHTML(true);             
             $mail->Subject = 'Password Reset Link';             
             $mail->Body    = "Click here to reset your password: <a href='$reset_link'>Reset Password</a>";             
             $mail->AltBody = "Open this link to reset your password: $reset_link";              
-
             if ($mail->send()) {                 
                 echo "<script>
                     document.addEventListener]('DOMContentLoaded', function() {
@@ -84,7 +78,6 @@ if (isset($_GET['email'])) {
     } 
 }
 ?>
-
 <!doctype html>
 <html lang="en">
 <head>    
@@ -116,11 +109,9 @@ if (isset($_GET['email'])) {
     </style>
 </head>
 <body>
-
 <div class="card p-4" style="width: 380px;">
     <h4 class="text-center mb-3">Forgot Password</h4>
     <p class="text-muted text-center" style="font-size: 14px;">Enter your email to receive reset link</p>
-
     <form method="get">
         <div class="mb-3">
             <label class="form-label">Email address</label>
@@ -129,7 +120,6 @@ if (isset($_GET['email'])) {
         <button type="submit" class="btn btn-custom w-100 text-white">Send Reset Link</button>
     </form>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

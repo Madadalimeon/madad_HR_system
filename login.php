@@ -1,6 +1,10 @@
 <?php
 session_start();
 include './config/config.php';
+if (isset($_SESSION['username'])) {
+    header("Location: ./index.php");
+    exit();
+}
 if (isset($_POST['login'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = md5($_POST['password']);
