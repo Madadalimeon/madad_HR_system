@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                             <a href="update.php?id=<?= $row['employees_id']; ?>" class="text-primary mx-2"><i class="fa-solid fa-pen"></i></a>
                                         <?php endif; ?>
                                         <?php if ($employeePermissions['Delete'] == 1): ?>
-                                            <a href="./Backend/delete.php?id=<?= $row['employees_id']; ?>" onclick="return confirm('Are you sure?')" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                                            <a href="./Backend/delete.php?id=<?= $row['employees_id']; ?>" class="text-danger"><i class="fa-solid fa-trash"></i></a>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

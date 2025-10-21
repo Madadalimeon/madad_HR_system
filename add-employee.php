@@ -60,7 +60,8 @@ $S_roles = "SELECT Roles_id, Roles_name FROM roles";
 $roles_result = $conn->query($S_roles);
 ?> 
 <div class="container mt-5">
-    <form class="from_Add" method="post" enctype="multipart/form-data">
+    <form class="from_Add" id="addEmployeeForm" method="post" enctype="multipart/form-data">
+
         <h2 class="text-center mb-4">Add New Employee</h2>
         <div class="row">
             <div class="col-md-6 mb-3">
@@ -151,7 +152,6 @@ $roles_result = $conn->query($S_roles);
         <button type="submit" name="submit" class="btn btn-light btn-block waves-effect waves-light my-4">Add New Employee</button>
     </form>
 </div>
-
 <?php
 $conn->close();
 include './include/footer.php';
