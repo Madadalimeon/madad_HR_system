@@ -96,6 +96,11 @@ $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
                         <span>Roles</span></a>
                 </li>
             <?php endif; ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="Report_Generation.php">
+                        <i class="fa-solid fa-file"></i>
+                        <span>Report Generation</span></a>
+                </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
