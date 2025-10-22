@@ -81,7 +81,8 @@ $Report_Generation = mysqli_query($conn, $Report);
         </div>
         <div class="card-body">
             <div class="text-end mb-3">
-                <a href="export.php?format=pdf&start=<?php echo $dayset; ?>&end=<?php echo $dayend; ?>&employee=<?php echo $employee_id; ?>" class="btn btn-danger btn-sm me-2">Export PDF</a>
+                <a href="PDF.php">p</a>
+                <a href="=<?php echo $dayset; ?>&end=<?php echo $dayend; ?>&employee=<?php echo $employee_id; ?>" class="btn btn-danger btn-sm me-2">Export PDF</a>
                 <a href="export.php?format=csv&start=<?php echo $dayset; ?>&end=<?php echo $dayend; ?>&employee=<?php echo $employee_id; ?>" class="btn btn-success btn-sm me-2">Export CSV</a>
                 <a href="export.php?format=excel&start=<?php echo $dayset; ?>&end=<?php echo $dayend; ?>&employee=<?php echo $employee_id; ?>" class="btn btn-warning btn-sm">Export Excel</a>
             </div>
