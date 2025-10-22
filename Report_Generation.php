@@ -84,7 +84,6 @@ print_r($Report_Generation);
         </div>
     </div>
 </div>
-
 <?php
 include("./include/footer.php");
 ?>

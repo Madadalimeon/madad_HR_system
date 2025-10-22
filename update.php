@@ -2,9 +2,6 @@
 session_start();
 include("./config/config.php");
 include("./include/header.php");
-
-
-
 if (isset($_GET['id'])) {
     $id =  $_GET['id'];
     $sql = "SELECT * FROM employees WHERE employees_id = $id";
