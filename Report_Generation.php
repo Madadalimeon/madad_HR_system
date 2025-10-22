@@ -2,18 +2,19 @@
 session_start();
 include("./config/config.php");
 include("./include/header.php");
-
 $dayset = '';
 $dayend = '';
 $employee_id = '';
 $where = "1=1";
-$e_name ="SELECT employees_id, first_name, last_name FROM employees";
-$employees_result = mysqli_query($conn,$e_name);
+$e_name = "SELECT employees_id, first_name, last_name FROM employees";
+$employees_result = mysqli_query($conn, $e_name);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $dayset = $_POST['Setday'] ?? '';
     $dayend = $_POST['End_day'] ?? '';
     $employee_id = $_POST['employee'] ?? '';
+
+
 
     if (!empty($dayset) && !empty($dayend)) {
         $where .= " AND a.date BETWEEN '$dayset' AND '$dayend'";
@@ -25,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $where .= " AND e.employees_id = '$employee_id'";
     }
 }
+
 $Report = "SELECT e.employees_id, e.first_name, e.last_name, e.email, e.department, 
            a.sign_on, a.sign_out, a.date 
            FROM employees e  
@@ -44,13 +46,11 @@ $Report_Generation = mysqli_query($conn, $Report);
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="Setday" class="form-label fw-semibold">Set Date</label>
-                        <input type="date" id="Setday" name="Setday" class="form-control"
-                            value="<?php echo $dayset; ?>">
+                        <input type="date" id="Setday" name="Setday" class="form-control" value="<?php echo $dayset; ?>">
                     </div>
                     <div class="col-md-6">
                         <label for="End_day" class="form-label fw-semibold">End Date</label>
-                        <input type="date" id="End_day" name="End_day" class="form-control"
-                            value="<?php echo $dayend; ?>">
+                        <input type="date" id="End_day" name="End_day" class="form-control" value="<?php echo $dayend; ?>">
                     </div>
                     <div class="col-6 mt-4">
                         <label>Employee</label>
@@ -81,10 +81,16 @@ $Report_Generation = mysqli_query($conn, $Report);
         </div>
         <div class="card-body">
             <div class="text-end mb-3">
-                <a href="PDF.php">p</a>
-                <a href="=<?php echo $dayset; ?>&end=<?php echo $dayend; ?>&employee=<?php echo $employee_id; ?>" class="btn btn-danger btn-sm me-2">Export PDF</a>
-                <a href="export.php?format=csv&start=<?php echo $dayset; ?>&end=<?php echo $dayend; ?>&employee=<?php echo $employee_id; ?>" class="btn btn-success btn-sm me-2">Export CSV</a>
-                <a href="export.php?format=excel&start=<?php echo $dayset; ?>&end=<?php echo $dayend; ?>&employee=<?php echo $employee_id; ?>" class="btn btn-warning btn-sm">Export Excel</a>
+                <?php
+
+                $qs = http_build_query([
+                    'start_date' => $dayset,
+                    'end_date' => $dayend,
+                    'employee_id' => $employee_id,
+                ]);
+                ?>
+                <a href="PDF.php?<?= $qs; ?>" class="btn btn-danger btn-sm me-2">Export PDF</a>
+                <a href="Excel.php?<?= $qs; ?>" class="btn btn-warning btn-sm">Export Excel</a>
             </div>
 
             <div class="table-responsive">
