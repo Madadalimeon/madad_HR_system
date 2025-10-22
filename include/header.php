@@ -30,6 +30,8 @@ $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
 <body id="page-top">
@@ -66,8 +68,8 @@ $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
                 </li>
             <?php endif; ?>
 
-            
-            
+
+
             <?php if (!empty($departmentPermissions['View']) && $departmentPermissions['View'] == 1): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="table_department.php">
@@ -79,9 +81,9 @@ $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
                 <li class="nav-item">
                     <a class="nav-link" href="attendance_table.php">
                         <i class="fa-solid fa-clipboard-user"></i>
-                        <span>Attendance Table</span></a>                
-            <?php endif; ?>
-                <?php if (!empty($attendancePermissionss['View']) && $attendancePermissionss['View'] == 1): ?>                
+                        <span>Attendance Table</span></a>
+                <?php endif; ?>
+                <?php if (!empty($attendancePermissionss['View']) && $attendancePermissionss['View'] == 1): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="Sign_in.php">
                         <i class="fa-solid fa-user-check"></i>
@@ -96,11 +98,11 @@ $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
                         <span>Roles</span></a>
                 </li>
             <?php endif; ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="Report_Generation.php">
-                        <i class="fa-solid fa-file"></i>
-                        <span>Report Generation</span></a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Report_Generation.php">
+                    <i class="fa-solid fa-file"></i>
+                    <span>Report Generation</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
