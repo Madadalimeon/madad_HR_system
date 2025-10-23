@@ -10,6 +10,7 @@ $departmentPermissions = $rolePermissions['permissions']['Department'] ?? [];
 $attendancePermissions = $rolePermissions['permissions']['Attendance_table'] ?? [];
 $attendancePermissionss = $rolePermissions['permissions']['Attendance'] ?? [];
 $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
+$Report_GenerationPermissions = $rolePermissions['permissions']['Report_Generation'] ?? [];
 
 ?>
 <!DOCTYPE html>
@@ -98,11 +99,13 @@ $rolesPermissions = $rolePermissions['permissions']['Roles'] ?? [];
                         <span>Roles</span></a>
                 </li>
             <?php endif; ?>
+            <?php if (!empty($Report_GenerationPermissions['View']) && $Report_GenerationPermissions['View'] == 1): ?>
             <li class="nav-item">
                 <a class="nav-link" href="Report_Generation.php">
                     <i class="fa-solid fa-file"></i>
                     <span>Report Generation</span></a>
             </li>
+              <?php endif; ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

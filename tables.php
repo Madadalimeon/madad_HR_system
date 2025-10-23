@@ -111,7 +111,7 @@ input:checked + .slider:before {
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">
-                        <thead class="table-dark">
+                        <thead class="table-primary">
                             <tr>
                                 <th>ID</th>
                                 <th>Full Name</th>

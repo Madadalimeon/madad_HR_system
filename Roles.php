@@ -1,4 +1,4 @@
-<?php
+<?php   
 session_start();
 $inactive = 3600;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive)) {
@@ -30,7 +30,7 @@ if (!isset($_SESSION['Roles_id'])) {
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover table-striped align-middle" id="dataTable" width="100%" cellspacing="0">
-                    <thead class="thead-dark">
+                    <thead class="table-primary">
                         <tr>
                             <th>ID</th>
                             <th>Roles</th>
