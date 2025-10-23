@@ -72,7 +72,6 @@ $pdf = new myPDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->headerAttributes();
-
 if (mysqli_num_rows($Report_Generation) > 0) {
     while ($row = mysqli_fetch_assoc($Report_Generation)) {
         $name = $row['first_name'] . ' ' . $row['last_name'];
@@ -87,4 +86,7 @@ if (mysqli_num_rows($Report_Generation) > 0) {
     }
 }
 $pdf->Output();
+
+
+
 ?>

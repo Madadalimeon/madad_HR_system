@@ -14,8 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $dayend = $_POST['End_day'] ?? '';
     $employee_id = $_POST['employee'] ?? '';
 
-
-
     if (!empty($dayset) && !empty($dayend)) {
         $where .= " AND a.date BETWEEN '$dayset' AND '$dayend'";
     } elseif (!empty($dayset)) {
@@ -53,16 +51,18 @@ $Report_Generation = mysqli_query($conn, $Report);
                         <input type="date" id="End_day" name="End_day" class="form-control" value="<?php echo $dayend; ?>">
                     </div>
                     <div class="col-6 mt-4">
-                        <label>Employee</label>
-                        <select name="employee" class="form-select">
-                            <option value="">Select Employee</option>
+                        <label class="form-label fw-bold text-dark">Employee</label>
+                        <select name="employee" class="form-select form-select-lg border border-success shadow-sm">
+                            <option value="" class="text-muted">Select Employee</option>
                             <?php while ($emp = mysqli_fetch_assoc($employees_result)): ?>
-                                <option value="<?php echo $emp['employees_id']; ?>" <?php if ($employee_id == $emp['employees_id']) echo 'selected'; ?>>
-                                    <?php echo $emp['first_name'] . ' ' . $emp['last_name']; ?>
+                                <option value="<?php echo $emp['employees_id']; ?>"
+                                    <?php if ($employee_id == $emp['employees_id']) echo 'selected'; ?>>
+                                    <?php echo htmlspecialchars($emp['first_name'] . ' ' . $emp['last_name']); ?>
                                 </option>
                             <?php endwhile; ?>
                         </select>
                     </div>
+                    >
                     <div class="col-12 text-center mt-4">
                         <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold rounded-3">
                             Filter Data
